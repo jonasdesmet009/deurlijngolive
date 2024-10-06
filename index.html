@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery UI Sortable - Connect lists</title>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+    <script>
+    $( function() {
+      $( "#OP11001, #OP11002" ).sortable({
+        connectWith: ".OPXXXXX", change: function (event, ui) {
+          save()
+        },
+        update: function (event, ui) {
+          save()
+        }
+      }).disableSelection();
+    } );
+function hide(lijn) {
+        var x=document.getElementById(lijn)
+
+        if(x.classList.contains("hide")) {
+            x.classList.remove("hide");
+        } else {
+            x.classList.add("hide");
+        }
+    }
+      
+function save() {
+      localStorage.setItem('lijn', document.getElementById("Deurlijn").innerHTML)
+    }
+
+    function load() {
+    if(localStorage.getItem("lijn")){
+        document.getElementById("Deurlijn").innerHTML = localStorage.getItem("lijn");
+        var elementen = document.getElementsByClassName("OPXXXXX");
+        
+        Array.from(elementen).forEach(element => {
+            element.classList.add("hide");
+        });
+    }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      load()
+    });
+    </script>
+    <style>
+        #Deurlijn{
+            background-image: url('DEURLIJN.png');
+            background-size:contain;
+            width:100vw;
+            height:100vh;
+        }
+        body{margin:0}
+        #WP11001{
+            display:flex;
+            position:absolute;
+            left: 60px;
+            top: 10px;
+        }
+        #WP11002{
+            display:flex;
+            position:absolute;
+            left: 300px;
+            top: 10px;
+        }
+        .OPXXXXX{
+          list-style:none;
+          margin:0;
+          padding:0;
+          z-index: 1000;
+          position:relative;
+        }
+        .OPXXXXX li{
+        background-color:#ccc;
+        border-bottom: black 1px solid;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+  </head>
+  <body>
+ <div id="Deurlijn">
+
+    <div id="WP11001">
+        <div id="Operator11001">
+            <div>WP11001</div>
+            <img src="operator.png">
+        </div>
+        <div id="list11001">
+            <button onclick="hide('OP11001')">
+            🔽
+            </button>
+             <ul id="OP11001" class="OPXXXXX hide">
+                  <li class="ui-state-default">010 aansluiten fiche deurmodule 80</li>
+                <li class="ui-state-default">020 aansluiten kabel deurslot 120</li>
+                <li class="ui-state-default">030 monteren deurpaneel 300</li>
+             </ul>
+        </div>
+    </div>
+    <div id="WP11002">
+        <div id="Operator11002">
+            <div>WP11002</div>
+            <img src="operator.png">
+        </div>
+        <div id="list11002">
+            <button onclick="hide('OP11002')">
+            🔽
+            </button>
+             <ul id="OP11002" class="OPXXXXX hide">
+                  <li class="ui-state-default">010 slot vastzetten 225</li>
+                <li class="ui-state-default">020 speaker monteren 225</li>
+                <li class="ui-state-default">030 speaker vastzetten 120</li>
+             </ul>
+        </div>
+    </div>
+ </div>
+   
+   
+   
+   
+  </body></html>
